@@ -1,14 +1,28 @@
-# Welcome to your CDK TypeScript project!
+# CI/ CD Pipeline for an Angular project
 
-This is a blank project for TypeScript development with CDK.
+## Source code repository
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+The Angular source code is stored in [one of my GitHub repositories](https://github.com/stefanfreitag/angular-hello-world). It is a very basic application that can be build by e.g.
 
-## Useful commands
+```bash
+ng build --prod
+```
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+## Build pipeline
+
+The repository is also the starting point for the CodePipeline. The pipeline
+will be triggered on changes on the master branch.
+
+```javascript
+  const sourceAction = new GitHubSourceAction({
+      actionName: "GitHub",
+      owner: "stefanfreitag",
+      repo: "angular-hello-world",
+      oauthToken: SecretValue.secretsManager("my-github-token"),
+      output: sourceOutput,
+      branch: "master",
+      trigger: GitHubTrigger.POLL
+    });
+```
+
+## Target
