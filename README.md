@@ -2,8 +2,7 @@
 
 ## Source code repository
 
-The Angular source code is stored in [one of my GitHub repositories](https://
-github.com/stefanfreitag/angular-hello-world). It is a very basic application that can be build by executing
+The Angular source code is stored in [one of my GitHub repositories](https://github.com/stefanfreitag/angular-hello-world). It is a very basic application that can be build by executing
 
 ```bash
 ng build --prod
