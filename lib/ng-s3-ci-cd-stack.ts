@@ -10,6 +10,7 @@ import {
   CloudFrontWebDistribution,
   PriceClass,
   OriginAccessIdentity,
+  GeoRestriction,
 } from "@aws-cdk/aws-cloudfront";
 import {
   GitHubSourceAction,
@@ -76,6 +77,7 @@ export class NgS3CiCdStack extends cdk.Stack {
         },
       ],
       comment: "Demo CloudFront Distribution",
+      geoRestriction: GeoRestriction.whitelist("DE", "GB"),
       loggingConfig: {
         bucket: accessLogsBucket,
         prefix: "ng-s3-demo",
