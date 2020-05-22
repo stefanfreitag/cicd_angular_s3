@@ -40,7 +40,7 @@ export class NgS3CiCdStack extends cdk.Stack {
       lifecycleRules: [
         {
           enabled: true,
-          expiration: Duration.days(14),
+          expiration: Duration.days(90),
         },
       ],
     });
