@@ -32,10 +32,10 @@ export class NgS3CiCdStack extends cdk.Stack {
       encryption: BucketEncryption.S3_MANAGED,
       publicReadAccess: false,
       blockPublicAccess: {
-        restrictPublicBuckets: false,
-        blockPublicAcls: false,
-        ignorePublicAcls: false,
-        blockPublicPolicy: false,
+        restrictPublicBuckets: true,
+        blockPublicAcls: true,
+        ignorePublicAcls: true,
+        blockPublicPolicy:true,
       },
       removalPolicy: RemovalPolicy.DESTROY,
       lifecycleRules: [
@@ -56,10 +56,10 @@ export class NgS3CiCdStack extends cdk.Stack {
 
       encryption: BucketEncryption.S3_MANAGED,
       blockPublicAccess: {
-        restrictPublicBuckets: false,
-        blockPublicAcls: false,
-        ignorePublicAcls: false,
-        blockPublicPolicy: false,
+        restrictPublicBuckets: true,
+        blockPublicAcls: true,
+        ignorePublicAcls: true,
+        blockPublicPolicy: true,
       },
       removalPolicy: RemovalPolicy.DESTROY,
     });
