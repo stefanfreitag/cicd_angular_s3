@@ -23,9 +23,6 @@ test("S3 Website bucket is setup properly", () => {
         IgnorePublicAcls: true,
         RestrictPublicBuckets: true,
       },
-      WebsiteConfiguration: {
-        IndexDocument: "index.html",
-      },
       BucketEncryption: {
         ServerSideEncryptionConfiguration: [
           {
@@ -45,6 +42,12 @@ test("S3 access log bucket is setup properly ", () => {
   const stack = new NgS3CiCd.NgS3CiCdStack(app, "MyTestStack");
   expectCDK(stack).to(
     haveResource("AWS::S3::Bucket", {
+      PublicAccessBlockConfiguration: {
+        BlockPublicAcls: true,
+        BlockPublicPolicy: true,
+        IgnorePublicAcls: true,
+        RestrictPublicBuckets: true,
+      },
       BucketEncryption: {
         ServerSideEncryptionConfiguration: [
           {

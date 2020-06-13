@@ -37,7 +37,7 @@ export class NgS3CiCdStack extends cdk.Stack {
         ignorePublicAcls: true,
         blockPublicPolicy:true,
       },
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
       lifecycleRules: [
         {
           enabled: true,
@@ -51,7 +51,6 @@ export class NgS3CiCdStack extends cdk.Stack {
     });
 
     const websiteBucket = new Bucket(this, "webSiteBucket", {
-      websiteIndexDocument: "index.html",
       publicReadAccess: false,
 
       encryption: BucketEncryption.S3_MANAGED,
@@ -61,7 +60,7 @@ export class NgS3CiCdStack extends cdk.Stack {
         ignorePublicAcls: true,
         blockPublicPolicy: true,
       },
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
     });
 
     websiteBucket.grantRead(oai);
