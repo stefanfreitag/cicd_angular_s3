@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "build"
     },
     {
@@ -69,7 +69,7 @@
     },
     {
       "name": "projen",
-      "version": "^0.16.29",
+      "version": "^0.17.17",
       "type": "build"
     },
     {
@@ -87,42 +87,42 @@
     },
     {
       "name": "@aws-cdk/aws-cloudfront",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-codebuild",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-codepipeline-actions",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-codepipeline",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-iam",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-s3",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-wafv2",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "peer"
     },
     {
@@ -132,42 +132,42 @@
     },
     {
       "name": "@aws-cdk/aws-cloudfront",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codebuild",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codepipeline-actions",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codepipeline",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-iam",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-s3",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-wafv2",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.91.0",
+      "version": "^1.95.1",
       "type": "runtime"
     }
   ],
