@@ -1,12 +1,13 @@
-import { CfnIPSet, CfnWebACL } from '@aws-cdk/aws-wafv2';
-import * as cdk from '@aws-cdk/core';
+import * as wafv2 from 'aws-cdk-lib/aws-wafv2';
+import * as cdk from 'aws-cdk-lib/core';
+import { Construct } from 'constructs';
 
 
 export class WafStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const test = new CfnIPSet(this, 'IPSet', {
+    const test = new wafv2.CfnIPSet(this, 'IPSet', {
       ipAddressVersion: 'IPV4',
       scope: 'CLOUDFRONT',
       addresses: [
@@ -30,7 +31,7 @@ export class WafStack extends cdk.Stack {
       ],
     });
 
-    new CfnWebACL(this, 'webAcl', {
+    new wafv2.CfnWebACL(this, 'webAcl', {
       description: 'Allow access for IPSet',
       defaultAction: {
         block: {},

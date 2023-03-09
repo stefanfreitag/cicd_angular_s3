@@ -1,33 +1,23 @@
-import {
-  CloudFrontWebDistribution,
-  PriceClass,
-  OriginAccessIdentity,
-  GeoRestriction,
-} from '@aws-cdk/aws-cloudfront';
-import { BuildSpec, Project } from '@aws-cdk/aws-codebuild';
-import { Pipeline, Artifact } from '@aws-cdk/aws-codepipeline';
-import {
-  GitHubSourceAction,
-  GitHubTrigger,
-  CodeBuildAction,
-} from '@aws-cdk/aws-codepipeline-actions';
-import { Role, ServicePrincipal, ManagedPolicy } from '@aws-cdk/aws-iam';
-import {
-  Bucket,
-  BucketEncryption,
-} from '@aws-cdk/aws-s3';
-import { SecretValue, RemovalPolicy, Duration, Construct, Stack, StackProps } from '@aws-cdk/core';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+
+import * as codebuild from 'aws-cdk-lib/aws-codebuild';
+import * as codepipeline from 'aws-cdk-lib/aws-codepipeline';
+import * as codepipelineactions from 'aws-cdk-lib/aws-codepipeline-actions';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as cdk from 'aws-cdk-lib/core';
+import { Construct } from 'constructs';
 
 
-export class NgS3CiCdStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+export class NgS3CiCdStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     /**
      * S3 bucket storing the access logs for the web site.
      */
-    const accessLogsBucket = new Bucket(this, 'accessLogsBucket', {
-      encryption: BucketEncryption.S3_MANAGED,
+    const accessLogsBucket = new s3.Bucket(this, 'accessLogsBucket', {
+      encryption: s3.BucketEncryption.S3_MANAGED,
       publicReadAccess: false,
       blockPublicAccess: {
         restrictPublicBuckets: true,
@@ -35,35 +25,35 @@ export class NgS3CiCdStack extends Stack {
         ignorePublicAcls: true,
         blockPublicPolicy: true,
       },
-      removalPolicy: RemovalPolicy.RETAIN,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
       lifecycleRules: [
         {
           enabled: true,
-          expiration: Duration.days(90),
+          expiration: cdk.Duration.days(90),
         },
       ],
     });
 
-    const oai = new OriginAccessIdentity(this, 'originAccessIdentity', {
+    const oai = new cloudfront.OriginAccessIdentity(this, 'originAccessIdentity', {
       comment: 'Allows CloudFront to reach the bucket',
     });
 
-    const websiteBucket = new Bucket(this, 'webSiteBucket', {
+    const websiteBucket = new s3.Bucket(this, 'webSiteBucket', {
       publicReadAccess: false,
 
-      encryption: BucketEncryption.S3_MANAGED,
+      encryption: s3.BucketEncryption.S3_MANAGED,
       blockPublicAccess: {
         restrictPublicBuckets: true,
         blockPublicAcls: true,
         ignorePublicAcls: true,
         blockPublicPolicy: true,
       },
-      removalPolicy: RemovalPolicy.RETAIN,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
     websiteBucket.grantRead(oai);
 
-    new CloudFrontWebDistribution(this, 'myDistribution', {
+    new cloudfront.CloudFrontWebDistribution(this, 'myDistribution', {
       originConfigs: [
         {
           s3OriginSource: {
@@ -74,16 +64,16 @@ export class NgS3CiCdStack extends Stack {
         },
       ],
       comment: 'Demo CloudFront Distribution',
-      geoRestriction: GeoRestriction.whitelist('DE', 'GB'),
+      geoRestriction: cloudfront.GeoRestriction.allowlist('DE', 'GB'),
       loggingConfig: {
         bucket: accessLogsBucket,
         prefix: 'ng-s3-demo',
         includeCookies: true,
       },
-      priceClass: PriceClass.PRICE_CLASS_100,
+      priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
     });
 
-    const pipeline = new Pipeline(this, 'FrontendPipeline', {
+    const pipeline = new codepipeline.Pipeline(this, 'FrontendPipeline', {
       pipelineName: 'deploy-angular-application',
     });
 
@@ -98,28 +88,28 @@ export class NgS3CiCdStack extends Stack {
       },
     });
 
-    const sourceOutput = new Artifact();
-    const sourceAction = new GitHubSourceAction({
+    const sourceOutput = new codepipeline.Artifact();
+    const sourceAction = new codepipelineactions.GitHubSourceAction({
       actionName: 'GitHub',
       owner: 'stefanfreitag',
       repo: 'angular-hello-world',
-      oauthToken: SecretValue.secretsManager('my-github-token'),
+      oauthToken: cdk.SecretValue.secretsManager('my-github-token'),
       output: sourceOutput,
       branch: 'master',
-      trigger: GitHubTrigger.POLL,
+      trigger: codepipelineactions.GitHubTrigger.POLL,
     });
     sourceStage.addAction(sourceAction);
 
-    const role = new Role(this, 'CodeBuildRole', {
-      assumedBy: new ServicePrincipal('codebuild.amazonaws.com'),
+    const role = new iam.Role(this, 'CodeBuildRole', {
+      assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
       managedPolicies: [
-        ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'),
+        iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'),
       ],
     });
 
-    const codeBuild = new Project(this, 'CodeBuildProject', {
+    const codeBuild = new codebuild.Project(this, 'CodeBuildProject', {
       role,
-      buildSpec: BuildSpec.fromObject({
+      buildSpec: codebuild.BuildSpec.fromObject({
         version: 0.2,
         phases: {
           install: {
@@ -160,7 +150,7 @@ export class NgS3CiCdStack extends Stack {
       }),
     });
 
-    const buildAction = new CodeBuildAction({
+    const buildAction = new codepipelineactions.CodeBuildAction({
       actionName: 'Build',
       input: sourceOutput,
       project: codeBuild,
