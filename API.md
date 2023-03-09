@@ -13,8 +13,8 @@ Name|Description
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IConstruct](#aws-cdk-core-iconstruct), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [ITaggable](#aws-cdk-core-itaggable)
-__Extends__: [Stack](#aws-cdk-core-stack)
+__Implements__: [IConstruct](#constructs-iconstruct), [IDependable](#constructs-idependable), [ITaggable](#aws-cdk-lib-itaggable)
+__Extends__: [Stack](#aws-cdk-lib-stack)
 
 ### Initializer
 
@@ -25,14 +25,16 @@ __Extends__: [Stack](#aws-cdk-core-stack)
 new NgS3CiCdStack(scope: Construct, id: string, props?: StackProps)
 ```
 
-* **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
+* **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[StackProps](#aws-cdk-core-stackprops)</code>)  *No description*
+* **props** (<code>[StackProps](#aws-cdk-lib-stackprops)</code>)  *No description*
   * **analyticsReporting** (<code>boolean</code>)  Include runtime versioning information in this Stack. __*Default*__: `analyticsReporting` setting of containing `App`, or value of 'aws:cdk:version-reporting' context key
+  * **crossRegionReferences** (<code>boolean</code>)  Enable this flag to allow native cross region stack references. __*Default*__: false
   * **description** (<code>string</code>)  A description of the stack. __*Default*__: No description.
-  * **env** (<code>[Environment](#aws-cdk-core-environment)</code>)  The AWS environment (account/region) where this stack will be deployed. __*Default*__: The environment of the containing `Stage` if available, otherwise create the stack will be environment-agnostic.
+  * **env** (<code>[Environment](#aws-cdk-lib-environment)</code>)  The AWS environment (account/region) where this stack will be deployed. __*Default*__: The environment of the containing `Stage` if available, otherwise create the stack will be environment-agnostic.
+  * **permissionsBoundary** (<code>[PermissionsBoundary](#aws-cdk-lib-permissionsboundary)</code>)  Options for applying a permissions boundary to all IAM Roles and Users created within this Stage. __*Default*__: no permissions boundary is applied
   * **stackName** (<code>string</code>)  Name to deploy the stack with. __*Default*__: Derived from construct path.
-  * **synthesizer** (<code>[IStackSynthesizer](#aws-cdk-core-istacksynthesizer)</code>)  Synthesis method to use while deploying this stack. __*Default*__: `DefaultStackSynthesizer` if the `@aws-cdk/core:newStyleStackSynthesis` feature flag is set, `LegacyStackSynthesizer` otherwise.
+  * **synthesizer** (<code>[IStackSynthesizer](#aws-cdk-lib-istacksynthesizer)</code>)  Synthesis method to use while deploying this stack. __*Default*__: The synthesizer specified on `App`, or `DefaultStackSynthesizer` otherwise.
   * **tags** (<code>Map<string, string></code>)  Stack tags that will be applied to all the taggable resources and the stack itself. __*Default*__: {}
   * **terminationProtection** (<code>boolean</code>)  Whether to enable termination protection for this stack. __*Default*__: false
 
@@ -43,8 +45,8 @@ new NgS3CiCdStack(scope: Construct, id: string, props?: StackProps)
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IConstruct](#aws-cdk-core-iconstruct), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [ITaggable](#aws-cdk-core-itaggable)
-__Extends__: [Stack](#aws-cdk-core-stack)
+__Implements__: [IConstruct](#constructs-iconstruct), [IDependable](#constructs-idependable), [ITaggable](#aws-cdk-lib-itaggable)
+__Extends__: [Stack](#aws-cdk-lib-stack)
 
 ### Initializer
 
@@ -55,14 +57,16 @@ __Extends__: [Stack](#aws-cdk-core-stack)
 new WafStack(scope: Construct, id: string, props?: StackProps)
 ```
 
-* **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
+* **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[StackProps](#aws-cdk-core-stackprops)</code>)  *No description*
+* **props** (<code>[StackProps](#aws-cdk-lib-stackprops)</code>)  *No description*
   * **analyticsReporting** (<code>boolean</code>)  Include runtime versioning information in this Stack. __*Default*__: `analyticsReporting` setting of containing `App`, or value of 'aws:cdk:version-reporting' context key
+  * **crossRegionReferences** (<code>boolean</code>)  Enable this flag to allow native cross region stack references. __*Default*__: false
   * **description** (<code>string</code>)  A description of the stack. __*Default*__: No description.
-  * **env** (<code>[Environment](#aws-cdk-core-environment)</code>)  The AWS environment (account/region) where this stack will be deployed. __*Default*__: The environment of the containing `Stage` if available, otherwise create the stack will be environment-agnostic.
+  * **env** (<code>[Environment](#aws-cdk-lib-environment)</code>)  The AWS environment (account/region) where this stack will be deployed. __*Default*__: The environment of the containing `Stage` if available, otherwise create the stack will be environment-agnostic.
+  * **permissionsBoundary** (<code>[PermissionsBoundary](#aws-cdk-lib-permissionsboundary)</code>)  Options for applying a permissions boundary to all IAM Roles and Users created within this Stage. __*Default*__: no permissions boundary is applied
   * **stackName** (<code>string</code>)  Name to deploy the stack with. __*Default*__: Derived from construct path.
-  * **synthesizer** (<code>[IStackSynthesizer](#aws-cdk-core-istacksynthesizer)</code>)  Synthesis method to use while deploying this stack. __*Default*__: `DefaultStackSynthesizer` if the `@aws-cdk/core:newStyleStackSynthesis` feature flag is set, `LegacyStackSynthesizer` otherwise.
+  * **synthesizer** (<code>[IStackSynthesizer](#aws-cdk-lib-istacksynthesizer)</code>)  Synthesis method to use while deploying this stack. __*Default*__: The synthesizer specified on `App`, or `DefaultStackSynthesizer` otherwise.
   * **tags** (<code>Map<string, string></code>)  Stack tags that will be applied to all the taggable resources and the stack itself. __*Default*__: {}
   * **terminationProtection** (<code>boolean</code>)  Whether to enable termination protection for this stack. __*Default*__: false
 
