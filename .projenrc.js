@@ -5,7 +5,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Stefan Freitag',
   authorAddress: 'stefan.freitag@udo.edu',
   cdkVersion: '2.68.0',
-  defaultReleaseBranch: 'main',
+  defaultReleaseBranch: 'master',
   name: 'ng-s3-cicd',
   keywords: [
     'cdk', 'angular', 'pipeline',
