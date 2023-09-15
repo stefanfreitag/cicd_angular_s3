@@ -34,6 +34,7 @@ new NgS3CiCdStack(scope: Construct, id: string, props?: StackProps)
   * **env** (<code>[Environment](#aws-cdk-lib-environment)</code>)  The AWS environment (account/region) where this stack will be deployed. __*Default*__: The environment of the containing `Stage` if available, otherwise create the stack will be environment-agnostic.
   * **permissionsBoundary** (<code>[PermissionsBoundary](#aws-cdk-lib-permissionsboundary)</code>)  Options for applying a permissions boundary to all IAM Roles and Users created within this Stage. __*Default*__: no permissions boundary is applied
   * **stackName** (<code>string</code>)  Name to deploy the stack with. __*Default*__: Derived from construct path.
+  * **suppressTemplateIndentation** (<code>boolean</code>)  Enable this flag to suppress indentation in generated CloudFormation templates. __*Default*__: the value of `@aws-cdk/core:suppressTemplateIndentation`, or `false` if that is not set.
   * **synthesizer** (<code>[IStackSynthesizer](#aws-cdk-lib-istacksynthesizer)</code>)  Synthesis method to use while deploying this stack. __*Default*__: The synthesizer specified on `App`, or `DefaultStackSynthesizer` otherwise.
   * **tags** (<code>Map<string, string></code>)  Stack tags that will be applied to all the taggable resources and the stack itself. __*Default*__: {}
   * **terminationProtection** (<code>boolean</code>)  Whether to enable termination protection for this stack. __*Default*__: false
@@ -66,6 +67,7 @@ new WafStack(scope: Construct, id: string, props?: StackProps)
   * **env** (<code>[Environment](#aws-cdk-lib-environment)</code>)  The AWS environment (account/region) where this stack will be deployed. __*Default*__: The environment of the containing `Stage` if available, otherwise create the stack will be environment-agnostic.
   * **permissionsBoundary** (<code>[PermissionsBoundary](#aws-cdk-lib-permissionsboundary)</code>)  Options for applying a permissions boundary to all IAM Roles and Users created within this Stage. __*Default*__: no permissions boundary is applied
   * **stackName** (<code>string</code>)  Name to deploy the stack with. __*Default*__: Derived from construct path.
+  * **suppressTemplateIndentation** (<code>boolean</code>)  Enable this flag to suppress indentation in generated CloudFormation templates. __*Default*__: the value of `@aws-cdk/core:suppressTemplateIndentation`, or `false` if that is not set.
   * **synthesizer** (<code>[IStackSynthesizer](#aws-cdk-lib-istacksynthesizer)</code>)  Synthesis method to use while deploying this stack. __*Default*__: The synthesizer specified on `App`, or `DefaultStackSynthesizer` otherwise.
   * **tags** (<code>Map<string, string></code>)  Stack tags that will be applied to all the taggable resources and the stack itself. __*Default*__: {}
   * **terminationProtection** (<code>boolean</code>)  Whether to enable termination protection for this stack. __*Default*__: false
