@@ -4,7 +4,7 @@ const { UpgradeDependenciesSchedule } = require('projen/lib/javascript');
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Stefan Freitag',
   authorAddress: 'stefan.freitag@udo.edu',
-  cdkVersion: '2.96.2',
+  cdkVersion: '2.273.0',
   defaultReleaseBranch: 'master',
   name: 'ng-s3-cicd',
   keywords: [
@@ -21,7 +21,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
       schedule: UpgradeDependenciesSchedule.MONTHLY,
     },
   },
-  typescriptVersion: '4.3.5',
+  jsiiVersion: '~6.0.0',
+  typescriptVersion: '~6.0.0',
+  jestOptions: {
+    jestVersion: '^29',
+  },
 });
 
 const common_exclude = ['.history/', '.venv', '.idea'];

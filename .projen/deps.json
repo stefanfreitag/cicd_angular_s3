@@ -1,28 +1,33 @@
 {
   "dependencies": [
     {
+      "name": "@stylistic/eslint-plugin",
+      "version": "^2",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
-      "version": "^27",
+      "version": "^29",
       "type": "build"
     },
     {
       "name": "@types/node",
-      "version": "^16 <= 16.18.78",
+      "version": "ts6.0",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
-      "version": "^7",
+      "version": "^8",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/parser",
-      "version": "^7",
+      "version": "^8",
       "type": "build"
     },
     {
       "name": "commit-and-tag-version",
-      "version": "^12",
+      "version": "^13",
       "type": "build"
     },
     {
@@ -35,17 +40,17 @@
     },
     {
       "name": "eslint",
-      "version": "^8",
+      "version": "^9",
       "type": "build"
     },
     {
       "name": "jest-junit",
-      "version": "^15",
+      "version": "^17",
       "type": "build"
     },
     {
       "name": "jest",
-      "version": "^27",
+      "version": "^29",
       "type": "build"
     },
     {
@@ -63,12 +68,12 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "1.x",
+      "version": "~6.0.0",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "1.x",
+      "version": "~6.0.0",
       "type": "build"
     },
     {
@@ -77,32 +82,22 @@
     },
     {
       "name": "ts-jest",
-      "version": "^27",
+      "version": "^29",
       "type": "build"
     },
     {
       "name": "typescript",
-      "version": "4.3.5",
+      "version": "~6.0.0",
       "type": "build"
     },
     {
-      "name": "@types/babel__traverse",
-      "version": "7.18.2",
-      "type": "override"
-    },
-    {
-      "name": "@types/prettier",
-      "version": "2.6.0",
-      "type": "override"
-    },
-    {
       "name": "aws-cdk-lib",
-      "version": "^2.96.2",
+      "version": "^2.273.0",
       "type": "peer"
     },
     {
       "name": "constructs",
-      "version": "^10.0.5",
+      "version": "^10.5.1",
       "type": "peer"
     }
   ],

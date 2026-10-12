@@ -1,4 +1,5 @@
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 
 import * as codebuild from 'aws-cdk-lib/aws-codebuild';
 import * as codepipeline from 'aws-cdk-lib/aws-codepipeline';
@@ -53,25 +54,23 @@ export class NgS3CiCdStack extends cdk.Stack {
 
     websiteBucket.grantRead(oai);
 
-    new cloudfront.CloudFrontWebDistribution(this, 'myDistribution', {
-      originConfigs: [
-        {
-          s3OriginSource: {
-            s3BucketSource: websiteBucket,
-            originAccessIdentity: oai,
-          },
-          behaviors: [{ isDefaultBehavior: true }],
-        },
-      ],
+    const distribution = new cloudfront.Distribution(this, 'myDistribution', {
+      defaultBehavior: {
+        origin: origins.S3BucketOrigin.withOriginAccessIdentity(websiteBucket, {
+          originAccessIdentity: oai,
+        }),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
+      defaultRootObject: 'index.html',
       comment: 'Demo CloudFront Distribution',
       geoRestriction: cloudfront.GeoRestriction.allowlist('DE', 'GB'),
-      loggingConfig: {
-        bucket: accessLogsBucket,
-        prefix: 'ng-s3-demo',
-        includeCookies: true,
-      },
+      logBucket: accessLogsBucket,
+      logFilePrefix: 'ng-s3-demo',
+      logIncludesCookies: true,
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
     });
+    // Keep the logical ID used by the former CloudFrontWebDistribution to avoid replacing the distribution.
+    (distribution.node.defaultChild as cloudfront.CfnDistribution).overrideLogicalId('myDistributionCFDistributionBCB3592B');
 
     const pipeline = new codepipeline.Pipeline(this, 'FrontendPipeline', {
       pipelineName: 'deploy-angular-application',
