@@ -43,14 +43,18 @@ new NgS3CiCdStack(scope: Construct, id: string, props?: StackProps)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.addDependency">addDependency</a></code> | Add a dependency between this stack and another stack. |
-| <code><a href="#ng-s3-cicd.NgS3CiCdStack.addMetadata">addMetadata</a></code> | Adds an arbitary key-value pair, with information you want to record about the stack. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.addMetadata">addMetadata</a></code> | Adds an arbitrary key-value pair, with information you want to record about the stack. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.addStackDependency">addStackDependency</a></code> | Add a dependency between this stack and another stack. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.addStackTag">addStackTag</a></code> | Configure a stack tag. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.addTransform">addTransform</a></code> | Add a Transform to this stack. A Transform is a macro that AWS CloudFormation uses to process your template. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.exportStringListValue">exportStringListValue</a></code> | Create a CloudFormation Export for a string list value. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.exportValue">exportValue</a></code> | Create a CloudFormation Export for a string value. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.formatArn">formatArn</a></code> | Creates an ARN from components. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.getLogicalId">getLogicalId</a></code> | Allocates a stack-unique CloudFormation-compatible logical identity for a specific resource. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.regionalFact">regionalFact</a></code> | Look up a fact value for the given fact for the region of this stack. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.removeStackTag">removeStackTag</a></code> | Remove a stack tag. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.renameLogicalId">renameLogicalId</a></code> | Rename a generated logical identities. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.reportMissingContextKey">reportMissingContextKey</a></code> | Indicate that a context key was expected. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.resolve">resolve</a></code> | Resolve a tokenized value in the context of the current stack. |
@@ -68,7 +72,26 @@ public toString(): string
 
 Returns a string representation of this construct.
 
-##### `addDependency` <a name="addDependency" id="ng-s3-cicd.NgS3CiCdStack.addDependency"></a>
+##### `with` <a name="with" id="ng-s3-cicd.NgS3CiCdStack.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="ng-s3-cicd.NgS3CiCdStack.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+---
+
+##### ~~`addDependency`~~ <a name="addDependency" id="ng-s3-cicd.NgS3CiCdStack.addDependency"></a>
 
 ```typescript
 public addDependency(target: Stack, reason?: string): void
@@ -78,6 +101,12 @@ Add a dependency between this stack and another stack.
 
 This can be used to define dependencies between any two stacks within an
 app, and also supports nested stacks.
+
+Stack dependencies may not cross Stage boundaries.
+
+This method has been renamed to `addStackDependency` to more clearly
+set it apart from `construct.node.addDependency`. See the documentation
+of that function for more details.
 
 ###### `target`<sup>Required</sup> <a name="target" id="ng-s3-cicd.NgS3CiCdStack.addDependency.parameter.target"></a>
 
@@ -97,7 +126,7 @@ app, and also supports nested stacks.
 public addMetadata(key: string, value: any): void
 ```
 
-Adds an arbitary key-value pair, with information you want to record about the stack.
+Adds an arbitrary key-value pair, with information you want to record about the stack.
 
 These get translated to the Metadata section of the generated template.
 
@@ -112,6 +141,57 @@ These get translated to the Metadata section of the generated template.
 ###### `value`<sup>Required</sup> <a name="value" id="ng-s3-cicd.NgS3CiCdStack.addMetadata.parameter.value"></a>
 
 - *Type:* any
+
+---
+
+##### `addStackDependency` <a name="addStackDependency" id="ng-s3-cicd.NgS3CiCdStack.addStackDependency"></a>
+
+```typescript
+public addStackDependency(target: Stack, reason?: string): void
+```
+
+Add a dependency between this stack and another stack.
+
+This can be used to define dependencies between any two stacks within an
+app, and also supports nested stacks.
+
+Stack dependencies may not cross Stage boundaries.
+
+This method only adds dependencies between stacks. If you are looking
+for a generic construct-to-construct dependency mechanism, use
+`construct.node.addDependency` instead.
+
+###### `target`<sup>Required</sup> <a name="target" id="ng-s3-cicd.NgS3CiCdStack.addStackDependency.parameter.target"></a>
+
+- *Type:* aws-cdk-lib.Stack
+
+---
+
+###### `reason`<sup>Optional</sup> <a name="reason" id="ng-s3-cicd.NgS3CiCdStack.addStackDependency.parameter.reason"></a>
+
+- *Type:* string
+
+---
+
+##### `addStackTag` <a name="addStackTag" id="ng-s3-cicd.NgS3CiCdStack.addStackTag"></a>
+
+```typescript
+public addStackTag(tagName: string, tagValue: string): void
+```
+
+Configure a stack tag.
+
+At deploy time, CloudFormation will automatically apply all stack tags to all resources in the stack.
+
+###### `tagName`<sup>Required</sup> <a name="tagName" id="ng-s3-cicd.NgS3CiCdStack.addStackTag.parameter.tagName"></a>
+
+- *Type:* string
+
+---
+
+###### `tagValue`<sup>Required</sup> <a name="tagValue" id="ng-s3-cicd.NgS3CiCdStack.addStackTag.parameter.tagValue"></a>
+
+- *Type:* string
 
 ---
 
@@ -205,8 +285,6 @@ temporarily ensure that the CloudFormation Export still exists while you
 remove the reference from the consuming stack. After that, you can remove
 the resource and the manual export.
 
-## Example
-
 Here is how the process works. Let's say there are two stacks,
 `producerStack` and `consumerStack`, and `producerStack` has a bucket
 called `bucket`, which is referenced by `consumerStack` (perhaps because
@@ -217,7 +295,7 @@ deleted, `consumerStack` might still be using it.
 
 Instead, the process takes two deployments:
 
-### Deployment 1: break the relationship
+**Deployment 1: break the relationship**:
 
 - Make sure `consumerStack` no longer references `bucket.bucketName` (maybe the consumer
   stack now uses its own bucket, or it writes to an AWS DynamoDB table, or maybe you just
@@ -227,7 +305,7 @@ Instead, the process takes two deployments:
   between the two stacks is being broken.
 - Deploy (this will effectively only change the `consumerStack`, but it's safe to deploy both).
 
-### Deployment 2: remove the bucket resource
+**Deployment 2: remove the bucket resource**:
 
 - You are now free to remove the `bucket` resource from `producerStack`.
 - Don't forget to remove the `exportValue()` call as well.
@@ -328,6 +406,22 @@ the given region.
 ---
 
 ###### `defaultValue`<sup>Optional</sup> <a name="defaultValue" id="ng-s3-cicd.NgS3CiCdStack.regionalFact.parameter.defaultValue"></a>
+
+- *Type:* string
+
+---
+
+##### `removeStackTag` <a name="removeStackTag" id="ng-s3-cicd.NgS3CiCdStack.removeStackTag"></a>
+
+```typescript
+public removeStackTag(tagName: string): void
+```
+
+Remove a stack tag.
+
+At deploy time, CloudFormation will automatically apply all stack tags to all resources in the stack.
+
+###### `tagName`<sup>Required</sup> <a name="tagName" id="ng-s3-cicd.NgS3CiCdStack.removeStackTag.parameter.tagName"></a>
 
 - *Type:* string
 
@@ -457,12 +551,14 @@ Convert an object, potentially containing tokens, to a YAML string.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.consumeListReference">consumeListReference</a></code> | Override the reference strength for a specific cross-stack string list reference. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.consumeReference">consumeReference</a></code> | Override the reference strength for a specific cross-stack reference value. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.isStack">isStack</a></code> | Return whether the given object is a Stack. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.of">of</a></code> | Looks up the first stack scope in which `construct` is defined. |
 
 ---
 
-##### ~~`isConstruct`~~ <a name="isConstruct" id="ng-s3-cicd.NgS3CiCdStack.isConstruct"></a>
+##### `isConstruct` <a name="isConstruct" id="ng-s3-cicd.NgS3CiCdStack.isConstruct"></a>
 
 ```typescript
 import { NgS3CiCdStack } from 'ng-s3-cicd'
@@ -472,11 +568,102 @@ NgS3CiCdStack.isConstruct(x: any)
 
 Checks if `x` is a construct.
 
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
 ###### `x`<sup>Required</sup> <a name="x" id="ng-s3-cicd.NgS3CiCdStack.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
 Any object.
+
+---
+
+##### `consumeListReference` <a name="consumeListReference" id="ng-s3-cicd.NgS3CiCdStack.consumeListReference"></a>
+
+```typescript
+import { NgS3CiCdStack } from 'ng-s3-cicd'
+
+NgS3CiCdStack.consumeListReference(value: string[], strength?: ReferenceStrength)
+```
+
+Override the reference strength for a specific cross-stack string list reference.
+
+This is the string list equivalent of `consumeReference`.
+
+###### `value`<sup>Required</sup> <a name="value" id="ng-s3-cicd.NgS3CiCdStack.consumeListReference.parameter.value"></a>
+
+- *Type:* string[]
+
+A tokenized string list reference.
+
+---
+
+###### `strength`<sup>Optional</sup> <a name="strength" id="ng-s3-cicd.NgS3CiCdStack.consumeListReference.parameter.strength"></a>
+
+- *Type:* aws-cdk-lib.ReferenceStrength
+
+The reference strength to use.
+
+Defaults to `BOTH`.
+
+---
+
+##### `consumeReference` <a name="consumeReference" id="ng-s3-cicd.NgS3CiCdStack.consumeReference"></a>
+
+```typescript
+import { NgS3CiCdStack } from 'ng-s3-cicd'
+
+NgS3CiCdStack.consumeReference(value: string, strength?: ReferenceStrength)
+```
+
+Override the reference strength for a specific cross-stack reference value.
+
+Use this to weaken (or strengthen) an individual reference without
+affecting other references to the same resource. For example:
+
+```ts
+// producerStack defines an SNS topic
+declare const topic: sns.Topic;
+
+// consumerStack subscribes to it with a weak reference,
+// so the producer can be torn down without blocking on this consumer
+const consumerStack = new Stack(app, 'Consumer', {
+  env: { account: '123456789012', region: 'us-east-1' },
+});
+new sns.Subscription(consumerStack, 'Subscription', {
+  topic: sns.Topic.fromTopicArn(consumerStack, 'Topic', Stack.consumeReference(topic.topicArn)),
+  endpoint: 'https://example.com/webhook',
+  protocol: sns.SubscriptionProtocol.HTTPS,
+});
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="ng-s3-cicd.NgS3CiCdStack.consumeReference.parameter.value"></a>
+
+- *Type:* string
+
+A tokenized string reference (e.g. `bucket.bucketArn`).
+
+---
+
+###### `strength`<sup>Optional</sup> <a name="strength" id="ng-s3-cicd.NgS3CiCdStack.consumeReference.parameter.strength"></a>
+
+- *Type:* aws-cdk-lib.ReferenceStrength
+
+The reference strength to use.
+
+Defaults to `BOTH`.
 
 ---
 
@@ -510,6 +697,8 @@ Looks up the first stack scope in which `construct` is defined.
 
 Fails if there is no stack up the tree.
 
+Will return the closest containing `Stack` or `NestedStack`.
+
 ###### `construct`<sup>Required</sup> <a name="construct" id="ng-s3-cicd.NgS3CiCdStack.of.parameter.construct"></a>
 
 - *Type:* constructs.IConstruct
@@ -528,8 +717,9 @@ The construct to start the search from.
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.availabilityZones">availabilityZones</a></code> | <code>string[]</code> | Returns the list of AZs that are available in the AWS environment (account/region) associated with this stack. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.bundlingRequired">bundlingRequired</a></code> | <code>boolean</code> | Indicates whether the stack requires bundling or not. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.dependencies">dependencies</a></code> | <code>aws-cdk-lib.Stack[]</code> | Return the stacks this stack depends on. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.env">env</a></code> | <code>aws-cdk-lib.interfaces.ResourceEnvironment</code> | The environment this Stack deploys to. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.environment">environment</a></code> | <code>string</code> | The environment coordinates in which this stack is deployed. |
-| <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.nested">nested</a></code> | <code>boolean</code> | Indicates if this is a nested stack, in which case `parentStack` will include a reference to it's parent. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.nested">nested</a></code> | <code>boolean</code> | Indicates if this is a nested stack, in which case `parentStack` will include a reference to its parent. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.notificationArns">notificationArns</a></code> | <code>string[]</code> | Returns the list of notification Amazon Resource Names (ARNs) for the current stack. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.partition">partition</a></code> | <code>string</code> | The partition in which this stack is defined. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.region">region</a></code> | <code>string</code> | The AWS region into which this stack will be deployed (e.g. `us-west-2`). |
@@ -540,7 +730,7 @@ The construct to start the search from.
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.templateFile">templateFile</a></code> | <code>string</code> | The name of the CloudFormation template file emitted to the output directory during synthesis. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.templateOptions">templateOptions</a></code> | <code>aws-cdk-lib.ITemplateOptions</code> | Options for CloudFormation template (like version, transform, description). |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.urlSuffix">urlSuffix</a></code> | <code>string</code> | The Amazon domain suffix for the region in which this stack is defined. |
-| <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.nestedStackParent">nestedStackParent</a></code> | <code>aws-cdk-lib.Stack</code> | If this is a nested stack, returns it's parent stack. |
+| <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.nestedStackParent">nestedStackParent</a></code> | <code>aws-cdk-lib.Stack</code> | If this is a nested stack, returns its parent stack. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.nestedStackResource">nestedStackResource</a></code> | <code>aws-cdk-lib.CfnResource</code> | If this is a nested stack, this represents its `AWS::CloudFormation::Stack` resource. |
 | <code><a href="#ng-s3-cicd.NgS3CiCdStack.property.terminationProtection">terminationProtection</a></code> | <code>boolean</code> | Whether termination protection is enabled for this stack. |
 
@@ -581,9 +771,9 @@ attempt to parse it to implement your logic. If you do, you must first
 check that it is a concrete value an not an unresolved token. If this
 value is an unresolved token (`Token.isUnresolved(stack.account)` returns
 `true`), this implies that the user wishes that this stack will synthesize
-into a **account-agnostic template**. In this case, your code should either
+into an **account-agnostic template**. In this case, your code should either
 fail (throw an error, emit a synth error using `Annotations.of(construct).addError()`) or
-implement some other region-agnostic behavior.
+implement some other account-agnostic behavior.
 
 ---
 
@@ -646,6 +836,18 @@ Return the stacks this stack depends on.
 
 ---
 
+##### `env`<sup>Required</sup> <a name="env" id="ng-s3-cicd.NgS3CiCdStack.property.env"></a>
+
+```typescript
+public readonly env: ResourceEnvironment;
+```
+
+- *Type:* aws-cdk-lib.interfaces.ResourceEnvironment
+
+The environment this Stack deploys to.
+
+---
+
 ##### `environment`<sup>Required</sup> <a name="environment" id="ng-s3-cicd.NgS3CiCdStack.property.environment"></a>
 
 ```typescript
@@ -678,7 +880,7 @@ public readonly nested: boolean;
 
 - *Type:* boolean
 
-Indicates if this is a nested stack, in which case `parentStack` will include a reference to it's parent.
+Indicates if this is a nested stack, in which case `parentStack` will include a reference to its parent.
 
 ---
 
@@ -846,7 +1048,7 @@ public readonly nestedStackParent: Stack;
 
 - *Type:* aws-cdk-lib.Stack
 
-If this is a nested stack, returns it's parent stack.
+If this is a nested stack, returns its parent stack.
 
 ---
 
@@ -864,7 +1066,7 @@ If this is a nested stack, this represents its `AWS::CloudFormation::Stack` reso
 
 ---
 
-##### `terminationProtection`<sup>Optional</sup> <a name="terminationProtection" id="ng-s3-cicd.NgS3CiCdStack.property.terminationProtection"></a>
+##### `terminationProtection`<sup>Required</sup> <a name="terminationProtection" id="ng-s3-cicd.NgS3CiCdStack.property.terminationProtection"></a>
 
 ```typescript
 public readonly terminationProtection: boolean;
@@ -918,14 +1120,18 @@ new WafStack(scope: Construct, id: string, props?: StackProps)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#ng-s3-cicd.WafStack.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#ng-s3-cicd.WafStack.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#ng-s3-cicd.WafStack.addDependency">addDependency</a></code> | Add a dependency between this stack and another stack. |
-| <code><a href="#ng-s3-cicd.WafStack.addMetadata">addMetadata</a></code> | Adds an arbitary key-value pair, with information you want to record about the stack. |
+| <code><a href="#ng-s3-cicd.WafStack.addMetadata">addMetadata</a></code> | Adds an arbitrary key-value pair, with information you want to record about the stack. |
+| <code><a href="#ng-s3-cicd.WafStack.addStackDependency">addStackDependency</a></code> | Add a dependency between this stack and another stack. |
+| <code><a href="#ng-s3-cicd.WafStack.addStackTag">addStackTag</a></code> | Configure a stack tag. |
 | <code><a href="#ng-s3-cicd.WafStack.addTransform">addTransform</a></code> | Add a Transform to this stack. A Transform is a macro that AWS CloudFormation uses to process your template. |
 | <code><a href="#ng-s3-cicd.WafStack.exportStringListValue">exportStringListValue</a></code> | Create a CloudFormation Export for a string list value. |
 | <code><a href="#ng-s3-cicd.WafStack.exportValue">exportValue</a></code> | Create a CloudFormation Export for a string value. |
 | <code><a href="#ng-s3-cicd.WafStack.formatArn">formatArn</a></code> | Creates an ARN from components. |
 | <code><a href="#ng-s3-cicd.WafStack.getLogicalId">getLogicalId</a></code> | Allocates a stack-unique CloudFormation-compatible logical identity for a specific resource. |
 | <code><a href="#ng-s3-cicd.WafStack.regionalFact">regionalFact</a></code> | Look up a fact value for the given fact for the region of this stack. |
+| <code><a href="#ng-s3-cicd.WafStack.removeStackTag">removeStackTag</a></code> | Remove a stack tag. |
 | <code><a href="#ng-s3-cicd.WafStack.renameLogicalId">renameLogicalId</a></code> | Rename a generated logical identities. |
 | <code><a href="#ng-s3-cicd.WafStack.reportMissingContextKey">reportMissingContextKey</a></code> | Indicate that a context key was expected. |
 | <code><a href="#ng-s3-cicd.WafStack.resolve">resolve</a></code> | Resolve a tokenized value in the context of the current stack. |
@@ -943,7 +1149,26 @@ public toString(): string
 
 Returns a string representation of this construct.
 
-##### `addDependency` <a name="addDependency" id="ng-s3-cicd.WafStack.addDependency"></a>
+##### `with` <a name="with" id="ng-s3-cicd.WafStack.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="ng-s3-cicd.WafStack.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+---
+
+##### ~~`addDependency`~~ <a name="addDependency" id="ng-s3-cicd.WafStack.addDependency"></a>
 
 ```typescript
 public addDependency(target: Stack, reason?: string): void
@@ -953,6 +1178,12 @@ Add a dependency between this stack and another stack.
 
 This can be used to define dependencies between any two stacks within an
 app, and also supports nested stacks.
+
+Stack dependencies may not cross Stage boundaries.
+
+This method has been renamed to `addStackDependency` to more clearly
+set it apart from `construct.node.addDependency`. See the documentation
+of that function for more details.
 
 ###### `target`<sup>Required</sup> <a name="target" id="ng-s3-cicd.WafStack.addDependency.parameter.target"></a>
 
@@ -972,7 +1203,7 @@ app, and also supports nested stacks.
 public addMetadata(key: string, value: any): void
 ```
 
-Adds an arbitary key-value pair, with information you want to record about the stack.
+Adds an arbitrary key-value pair, with information you want to record about the stack.
 
 These get translated to the Metadata section of the generated template.
 
@@ -987,6 +1218,57 @@ These get translated to the Metadata section of the generated template.
 ###### `value`<sup>Required</sup> <a name="value" id="ng-s3-cicd.WafStack.addMetadata.parameter.value"></a>
 
 - *Type:* any
+
+---
+
+##### `addStackDependency` <a name="addStackDependency" id="ng-s3-cicd.WafStack.addStackDependency"></a>
+
+```typescript
+public addStackDependency(target: Stack, reason?: string): void
+```
+
+Add a dependency between this stack and another stack.
+
+This can be used to define dependencies between any two stacks within an
+app, and also supports nested stacks.
+
+Stack dependencies may not cross Stage boundaries.
+
+This method only adds dependencies between stacks. If you are looking
+for a generic construct-to-construct dependency mechanism, use
+`construct.node.addDependency` instead.
+
+###### `target`<sup>Required</sup> <a name="target" id="ng-s3-cicd.WafStack.addStackDependency.parameter.target"></a>
+
+- *Type:* aws-cdk-lib.Stack
+
+---
+
+###### `reason`<sup>Optional</sup> <a name="reason" id="ng-s3-cicd.WafStack.addStackDependency.parameter.reason"></a>
+
+- *Type:* string
+
+---
+
+##### `addStackTag` <a name="addStackTag" id="ng-s3-cicd.WafStack.addStackTag"></a>
+
+```typescript
+public addStackTag(tagName: string, tagValue: string): void
+```
+
+Configure a stack tag.
+
+At deploy time, CloudFormation will automatically apply all stack tags to all resources in the stack.
+
+###### `tagName`<sup>Required</sup> <a name="tagName" id="ng-s3-cicd.WafStack.addStackTag.parameter.tagName"></a>
+
+- *Type:* string
+
+---
+
+###### `tagValue`<sup>Required</sup> <a name="tagValue" id="ng-s3-cicd.WafStack.addStackTag.parameter.tagValue"></a>
+
+- *Type:* string
 
 ---
 
@@ -1080,8 +1362,6 @@ temporarily ensure that the CloudFormation Export still exists while you
 remove the reference from the consuming stack. After that, you can remove
 the resource and the manual export.
 
-## Example
-
 Here is how the process works. Let's say there are two stacks,
 `producerStack` and `consumerStack`, and `producerStack` has a bucket
 called `bucket`, which is referenced by `consumerStack` (perhaps because
@@ -1092,7 +1372,7 @@ deleted, `consumerStack` might still be using it.
 
 Instead, the process takes two deployments:
 
-### Deployment 1: break the relationship
+**Deployment 1: break the relationship**:
 
 - Make sure `consumerStack` no longer references `bucket.bucketName` (maybe the consumer
   stack now uses its own bucket, or it writes to an AWS DynamoDB table, or maybe you just
@@ -1102,7 +1382,7 @@ Instead, the process takes two deployments:
   between the two stacks is being broken.
 - Deploy (this will effectively only change the `consumerStack`, but it's safe to deploy both).
 
-### Deployment 2: remove the bucket resource
+**Deployment 2: remove the bucket resource**:
 
 - You are now free to remove the `bucket` resource from `producerStack`.
 - Don't forget to remove the `exportValue()` call as well.
@@ -1203,6 +1483,22 @@ the given region.
 ---
 
 ###### `defaultValue`<sup>Optional</sup> <a name="defaultValue" id="ng-s3-cicd.WafStack.regionalFact.parameter.defaultValue"></a>
+
+- *Type:* string
+
+---
+
+##### `removeStackTag` <a name="removeStackTag" id="ng-s3-cicd.WafStack.removeStackTag"></a>
+
+```typescript
+public removeStackTag(tagName: string): void
+```
+
+Remove a stack tag.
+
+At deploy time, CloudFormation will automatically apply all stack tags to all resources in the stack.
+
+###### `tagName`<sup>Required</sup> <a name="tagName" id="ng-s3-cicd.WafStack.removeStackTag.parameter.tagName"></a>
 
 - *Type:* string
 
@@ -1332,12 +1628,14 @@ Convert an object, potentially containing tokens, to a YAML string.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#ng-s3-cicd.WafStack.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#ng-s3-cicd.WafStack.consumeListReference">consumeListReference</a></code> | Override the reference strength for a specific cross-stack string list reference. |
+| <code><a href="#ng-s3-cicd.WafStack.consumeReference">consumeReference</a></code> | Override the reference strength for a specific cross-stack reference value. |
 | <code><a href="#ng-s3-cicd.WafStack.isStack">isStack</a></code> | Return whether the given object is a Stack. |
 | <code><a href="#ng-s3-cicd.WafStack.of">of</a></code> | Looks up the first stack scope in which `construct` is defined. |
 
 ---
 
-##### ~~`isConstruct`~~ <a name="isConstruct" id="ng-s3-cicd.WafStack.isConstruct"></a>
+##### `isConstruct` <a name="isConstruct" id="ng-s3-cicd.WafStack.isConstruct"></a>
 
 ```typescript
 import { WafStack } from 'ng-s3-cicd'
@@ -1347,11 +1645,102 @@ WafStack.isConstruct(x: any)
 
 Checks if `x` is a construct.
 
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
 ###### `x`<sup>Required</sup> <a name="x" id="ng-s3-cicd.WafStack.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
 Any object.
+
+---
+
+##### `consumeListReference` <a name="consumeListReference" id="ng-s3-cicd.WafStack.consumeListReference"></a>
+
+```typescript
+import { WafStack } from 'ng-s3-cicd'
+
+WafStack.consumeListReference(value: string[], strength?: ReferenceStrength)
+```
+
+Override the reference strength for a specific cross-stack string list reference.
+
+This is the string list equivalent of `consumeReference`.
+
+###### `value`<sup>Required</sup> <a name="value" id="ng-s3-cicd.WafStack.consumeListReference.parameter.value"></a>
+
+- *Type:* string[]
+
+A tokenized string list reference.
+
+---
+
+###### `strength`<sup>Optional</sup> <a name="strength" id="ng-s3-cicd.WafStack.consumeListReference.parameter.strength"></a>
+
+- *Type:* aws-cdk-lib.ReferenceStrength
+
+The reference strength to use.
+
+Defaults to `BOTH`.
+
+---
+
+##### `consumeReference` <a name="consumeReference" id="ng-s3-cicd.WafStack.consumeReference"></a>
+
+```typescript
+import { WafStack } from 'ng-s3-cicd'
+
+WafStack.consumeReference(value: string, strength?: ReferenceStrength)
+```
+
+Override the reference strength for a specific cross-stack reference value.
+
+Use this to weaken (or strengthen) an individual reference without
+affecting other references to the same resource. For example:
+
+```ts
+// producerStack defines an SNS topic
+declare const topic: sns.Topic;
+
+// consumerStack subscribes to it with a weak reference,
+// so the producer can be torn down without blocking on this consumer
+const consumerStack = new Stack(app, 'Consumer', {
+  env: { account: '123456789012', region: 'us-east-1' },
+});
+new sns.Subscription(consumerStack, 'Subscription', {
+  topic: sns.Topic.fromTopicArn(consumerStack, 'Topic', Stack.consumeReference(topic.topicArn)),
+  endpoint: 'https://example.com/webhook',
+  protocol: sns.SubscriptionProtocol.HTTPS,
+});
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="ng-s3-cicd.WafStack.consumeReference.parameter.value"></a>
+
+- *Type:* string
+
+A tokenized string reference (e.g. `bucket.bucketArn`).
+
+---
+
+###### `strength`<sup>Optional</sup> <a name="strength" id="ng-s3-cicd.WafStack.consumeReference.parameter.strength"></a>
+
+- *Type:* aws-cdk-lib.ReferenceStrength
+
+The reference strength to use.
+
+Defaults to `BOTH`.
 
 ---
 
@@ -1385,6 +1774,8 @@ Looks up the first stack scope in which `construct` is defined.
 
 Fails if there is no stack up the tree.
 
+Will return the closest containing `Stack` or `NestedStack`.
+
 ###### `construct`<sup>Required</sup> <a name="construct" id="ng-s3-cicd.WafStack.of.parameter.construct"></a>
 
 - *Type:* constructs.IConstruct
@@ -1403,8 +1794,9 @@ The construct to start the search from.
 | <code><a href="#ng-s3-cicd.WafStack.property.availabilityZones">availabilityZones</a></code> | <code>string[]</code> | Returns the list of AZs that are available in the AWS environment (account/region) associated with this stack. |
 | <code><a href="#ng-s3-cicd.WafStack.property.bundlingRequired">bundlingRequired</a></code> | <code>boolean</code> | Indicates whether the stack requires bundling or not. |
 | <code><a href="#ng-s3-cicd.WafStack.property.dependencies">dependencies</a></code> | <code>aws-cdk-lib.Stack[]</code> | Return the stacks this stack depends on. |
+| <code><a href="#ng-s3-cicd.WafStack.property.env">env</a></code> | <code>aws-cdk-lib.interfaces.ResourceEnvironment</code> | The environment this Stack deploys to. |
 | <code><a href="#ng-s3-cicd.WafStack.property.environment">environment</a></code> | <code>string</code> | The environment coordinates in which this stack is deployed. |
-| <code><a href="#ng-s3-cicd.WafStack.property.nested">nested</a></code> | <code>boolean</code> | Indicates if this is a nested stack, in which case `parentStack` will include a reference to it's parent. |
+| <code><a href="#ng-s3-cicd.WafStack.property.nested">nested</a></code> | <code>boolean</code> | Indicates if this is a nested stack, in which case `parentStack` will include a reference to its parent. |
 | <code><a href="#ng-s3-cicd.WafStack.property.notificationArns">notificationArns</a></code> | <code>string[]</code> | Returns the list of notification Amazon Resource Names (ARNs) for the current stack. |
 | <code><a href="#ng-s3-cicd.WafStack.property.partition">partition</a></code> | <code>string</code> | The partition in which this stack is defined. |
 | <code><a href="#ng-s3-cicd.WafStack.property.region">region</a></code> | <code>string</code> | The AWS region into which this stack will be deployed (e.g. `us-west-2`). |
@@ -1415,7 +1807,7 @@ The construct to start the search from.
 | <code><a href="#ng-s3-cicd.WafStack.property.templateFile">templateFile</a></code> | <code>string</code> | The name of the CloudFormation template file emitted to the output directory during synthesis. |
 | <code><a href="#ng-s3-cicd.WafStack.property.templateOptions">templateOptions</a></code> | <code>aws-cdk-lib.ITemplateOptions</code> | Options for CloudFormation template (like version, transform, description). |
 | <code><a href="#ng-s3-cicd.WafStack.property.urlSuffix">urlSuffix</a></code> | <code>string</code> | The Amazon domain suffix for the region in which this stack is defined. |
-| <code><a href="#ng-s3-cicd.WafStack.property.nestedStackParent">nestedStackParent</a></code> | <code>aws-cdk-lib.Stack</code> | If this is a nested stack, returns it's parent stack. |
+| <code><a href="#ng-s3-cicd.WafStack.property.nestedStackParent">nestedStackParent</a></code> | <code>aws-cdk-lib.Stack</code> | If this is a nested stack, returns its parent stack. |
 | <code><a href="#ng-s3-cicd.WafStack.property.nestedStackResource">nestedStackResource</a></code> | <code>aws-cdk-lib.CfnResource</code> | If this is a nested stack, this represents its `AWS::CloudFormation::Stack` resource. |
 | <code><a href="#ng-s3-cicd.WafStack.property.terminationProtection">terminationProtection</a></code> | <code>boolean</code> | Whether termination protection is enabled for this stack. |
 
@@ -1456,9 +1848,9 @@ attempt to parse it to implement your logic. If you do, you must first
 check that it is a concrete value an not an unresolved token. If this
 value is an unresolved token (`Token.isUnresolved(stack.account)` returns
 `true`), this implies that the user wishes that this stack will synthesize
-into a **account-agnostic template**. In this case, your code should either
+into an **account-agnostic template**. In this case, your code should either
 fail (throw an error, emit a synth error using `Annotations.of(construct).addError()`) or
-implement some other region-agnostic behavior.
+implement some other account-agnostic behavior.
 
 ---
 
@@ -1521,6 +1913,18 @@ Return the stacks this stack depends on.
 
 ---
 
+##### `env`<sup>Required</sup> <a name="env" id="ng-s3-cicd.WafStack.property.env"></a>
+
+```typescript
+public readonly env: ResourceEnvironment;
+```
+
+- *Type:* aws-cdk-lib.interfaces.ResourceEnvironment
+
+The environment this Stack deploys to.
+
+---
+
 ##### `environment`<sup>Required</sup> <a name="environment" id="ng-s3-cicd.WafStack.property.environment"></a>
 
 ```typescript
@@ -1553,7 +1957,7 @@ public readonly nested: boolean;
 
 - *Type:* boolean
 
-Indicates if this is a nested stack, in which case `parentStack` will include a reference to it's parent.
+Indicates if this is a nested stack, in which case `parentStack` will include a reference to its parent.
 
 ---
 
@@ -1721,7 +2125,7 @@ public readonly nestedStackParent: Stack;
 
 - *Type:* aws-cdk-lib.Stack
 
-If this is a nested stack, returns it's parent stack.
+If this is a nested stack, returns its parent stack.
 
 ---
 
@@ -1739,7 +2143,7 @@ If this is a nested stack, this represents its `AWS::CloudFormation::Stack` reso
 
 ---
 
-##### `terminationProtection`<sup>Optional</sup> <a name="terminationProtection" id="ng-s3-cicd.WafStack.property.terminationProtection"></a>
+##### `terminationProtection`<sup>Required</sup> <a name="terminationProtection" id="ng-s3-cicd.WafStack.property.terminationProtection"></a>
 
 ```typescript
 public readonly terminationProtection: boolean;
